@@ -50,5 +50,5 @@ running script
 > [CP005082.1] :: 4155 -- J112_21090 -- [4410381, 4410525] [603]          
 > [CP005082.1] :: J112_12470 added 1057
 ```
-
-## Continuous build status
+<!-- 
+## Continuous build status -->
