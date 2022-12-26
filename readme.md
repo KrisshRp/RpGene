@@ -1,5 +1,8 @@
 <div align="center">
-  <img src="./Bin/Assets/images/dna.png">
+  <img style="width: 75px;" src="./Bin/Assets/images/dna.png">
+</div>
+<div align="center">
+  <h1> RpGene </h1>
 </div>
 
 [![Python](https://img.shields.io/pypi/pyversions/tensorflow.svg?style=plastic)](https://badge.fury.io/py/tensorflow)
@@ -46,7 +49,6 @@ running script
 > [CP005082.1] :: sending request to servere ->  3.24MB
 > [CP005082.1] :: 4155 -- J112_21090 -- [4410381, 4410525] [603]          
 > [CP005082.1] :: J112_12470 added 1057
-$ 
 ```
 
 ## Continuous build status
