@@ -17,23 +17,24 @@ The information on gene sequences is accessible in a variety of databases that a
 ```via git download```
 ### Clone the reposatory
 ```shell
-$ git clone https://github.com/KrisshRp/RpGene.git
+  git clone https://github.com/KrisshRp/RpGene.git
 ```
 ## 2. Enter the folder
 ```shell
-$ cd ./RpGene
+  cd ./RpGene
 ```
 ## 3. Install the dependencies
 ```
-$ pip install -r requirements.txt
+  pip install -r requirements.txt
 ```
 ## 4. Provide Input Data
 Update the `./RpGene/Temp/jsonDatabase/database.json` with your preferable `"organism name"` , `"NCBI accession id"` and `"ePath gene locus tags"`
 ## 5. Run the script
 
 ```shell
-$ python main.py
+  python main.py
 ```
+## 6. Output
 *If chrome driver is downloaded*
 ```python
 Chrome Driver is up-to-dated
