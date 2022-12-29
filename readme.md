@@ -23,7 +23,7 @@ $ cd ./RpGene
 ```
 ## Install *(Windows)*
 ```
-$ pip install requirement.txt
+$ pip install requirements.txt
 ```
 #### How to run
 

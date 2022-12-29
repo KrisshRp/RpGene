@@ -1,0 +1,5 @@
+selenium
+selenium-wire
+requests
+wget
+numpy
