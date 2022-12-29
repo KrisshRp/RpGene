@@ -9,7 +9,7 @@
 ------------------- |
 [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](#) |
 
-### [RpGene](#) : `A soft-tool for automated gene extraction, gene sequencing analysis and dataset` 
+#### [RpGene](#) : `A soft-tool for automated gene extraction, gene sequencing analysis and dataset` 
 
 The information on gene sequences is accessible in a variety of databases that are accessible online, like `NCBI` , `DEG` , `OGEE` and many more. The extraction of information on genes however, is a challenging task to extract from these databases. In the context of machine learning one of the most fundamental demands is the data to be well-organized and usable format. Converting information about gene sequences from sequences into datasets consisting of features derived from sequences in a proper format is a difficult task for researchers. In this study, we have created a soft tool called RpGene based on Python that can perform automatizing the extraction of sequence data of genes from the NCBI database, and analyzing the data using e-Path, and presenting the user with an optimally optimized dataset that can be utilized for dataset generation in context of machine learning and other statistical studies. Our soft tool vastly decreases the time and effort required for dataset generation from gene sequence information and automates the entire process. It finally calculates the sequence features from CodonW integration and outputs a read to go dataset for further studies.
 
