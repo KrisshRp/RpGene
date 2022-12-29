@@ -13,7 +13,7 @@
 
 ## Clone the reposatory
 ```shell
-$ gh repo clone Krishnendu69toor/RpGene
+$ git clone https://github.com/KrisshRp/RpGene.git
 ```
 
 ```shell
@@ -23,6 +23,7 @@ $ cd ./RpGene
 ```
 $ pip install -r requirements.txt
 ```
+update ./RpGene/Temp/jsonDatabase/database.json with your preferable organism name, NCBI accession id and ePath gene locus tags
 #### How to run
 
 ```shell
