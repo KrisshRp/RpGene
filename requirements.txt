@@ -1,0 +1,10 @@
+selenium
+selenium-wire
+requests
+wget
+numpy
+fastapi
+jinja2
+uvicorn
+cython
+pandas
