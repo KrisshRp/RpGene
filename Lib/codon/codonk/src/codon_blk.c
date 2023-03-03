@@ -6,8 +6,12 @@
 #include <limits.h>
 #include <stdbool.h>
 
-#include "codonW.h"
+#include "../include/codonW.h"
 
+/****************** Codon Usage Out           *****************************/
+/* Writes codon usage output to file. Note this subroutine is only called */
+/* when machine readable output is selected, otherwise cutab_out is used  */
+/**************************************************************************/
 int codon_usage_out(FILE *fblkout, long *nncod, char *ttitle, MENU_STRUCT *pm)
 {
    GENETIC_CODE_STRUCT *pcu = pm->pcu; 
@@ -17,6 +21,12 @@ int codon_usage_out(FILE *fblkout, long *nncod, char *ttitle, MENU_STRUCT *pm)
    char sp = pm->separator;
 
    count_codons(nncod, &ccodon_tot);
+
+   /*example of output                                                     */
+   /*0,0,0,0,3,2,2,0,0,0,0,0,0,3,0,0,                                      */
+   /*0,0,0,4,3,4,1,7,0,0,0,0,3,1,3,1,Codons=100                              */
+   /*0,0,0,0,10,6,3,0,0,0,0,0,1,1,12,0,Universal Genetic code              */
+   /*0,0,0,3,7,5,7,9,0,1,1,1,8,4,5,0,MLSPCOPER.PE1                         */
 
    for (x = 1; x < 65; x++)
    {

@@ -6,8 +6,9 @@
 #include <limits.h>
 #include <stdbool.h>
 
-#include "codonW.h"
+#include "../include/codonW.h"
 
+/****************** Silent Base Usage     *******************************/
 int base_sil_us(long *nncod, long *nnaa, double base_sil[], int *ds, int *da, GENETIC_CODE_STRUCT *pcu)
 {
    int id, i, x, y, z;

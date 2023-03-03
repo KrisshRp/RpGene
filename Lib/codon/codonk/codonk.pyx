@@ -9,14 +9,14 @@ cimport numpy as np
 np.import_array()
 import pandas as pd
 
-cimport codonkLib
+cimport codonklib
 
 def convert_char(arr):
-    return [c.decode('UTF-8') for c in arr]
+    return [c for c in arr]
 
-ref_codons = convert_char(codonkLib.amino_acids.cod)
-ref_aa1 = convert_char(codonkLib.amino_acids.aa1)
-ref_aa3 = convert_char(codonkLib.amino_acids.aa3)
+ref_codons = convert_char(codonklib.amino_acids.cod)
+ref_aa1 = convert_char(codonklib.amino_acids.aa1)
+ref_aa3 = convert_char(codonklib.amino_acids.aa3)
 
 aa1_aa3 = pd.Series(index=ref_aa1, data=ref_aa3)
 aa3_aa1 = pd.Series(index=ref_aa3, data=ref_aa1)
@@ -35,7 +35,7 @@ def get_reference_code(idx):
 cdef class CodonSeq:
     # Use memory view to arrays
     # https://suzyahyah.github.io/cython/programming/2018/12/01/Gotchas-in-Cython.html
-    cdef public codonkLib.GENETIC_CODE_STRUCT ref_code
+    cdef public codonklib.GENETIC_CODE_STRUCT ref_code
     cdef public int[::1] dds
     cdef public int[::1] dda
 
@@ -65,12 +65,12 @@ cdef class CodonSeq:
         self.dda = np.zeros([23], dtype=c_int)
 
         if isinstance(genetic_code, int):
-            self.ref_code = codonkLib.cu_ref[genetic_code]
+            self.ref_code = codonklib.cu_ref[genetic_code]
         else:
             self.genetic_code = genetic_code
 
-        codonkLib.how_synon(&self.dds[0], &self.ref_code)
-        codonkLib.how_synon_aa(&self.dda[0], &self.ref_code)
+        codonklib.how_synon(&self.dds[0], &self.ref_code)
+        codonklib.how_synon_aa(&self.dda[0], &self.ref_code)
 
         self.codon_tot = 0
         self.valid_stops = 0
@@ -78,7 +78,7 @@ cdef class CodonSeq:
         self.naa = np.zeros([22], dtype=c_long)
 
         self.seq = seq.encode()
-        codonkLib.codon_usage_tot(<char *>self.seq,
+        codonklib.codon_usage_tot(<char *>self.seq,
             &self.codon_tot, &self.valid_stops, &self.ncod[0], &self.naa[0], &self.ref_code)
         
         return
@@ -99,7 +99,7 @@ cdef class CodonSeq:
         ser = ser[ref_codons]
         aa_to_idx = pd.Series(np.arange(len(ref_aa1)), index=ref_aa1)
 
-        self.ref_code = codonkLib.GENETIC_CODE_STRUCT(b"", b"")
+        self.ref_code = codonklib.GENETIC_CODE_STRUCT(b"", b"")
         self.ref_code.ca = aa_to_idx[ser].values
         return
 
@@ -140,9 +140,9 @@ cdef class CodonSeq:
 
         [Sharp and Li 1987](https://doi.org/10.1093/nar/15.3.1281)
         """
-        cdef codonkLib.CAI_STRUCT ref_cai = codonkLib.cai_ref[cai_ref]
+        cdef codonklib.CAI_STRUCT ref_cai = codonklib.cai_ref[cai_ref]
         cdef double cai_val = 0
-        cdef int ret = codonkLib.cai(&self.ncod[0], &cai_val, &self.dds[0], &ref_cai, &self.ref_code)
+        cdef int ret = codonklib.cai(&self.ncod[0], &cai_val, &self.dds[0], &ref_cai, &self.ref_code)
         return cai_val
 
     cpdef float cbi(self, int cai_ref=0):
@@ -175,8 +175,8 @@ cdef class CodonSeq:
         [Bennetzen and Hall 1982](https://europepmc.org/article/MED/7037777)
         """
         cdef float cbi_val
-        cdef int ret = codonkLib.cbi(&self.ncod[0], &self.naa[0], &cbi_val, \
-            &self.dds[0], &self.dda[0], &self.ref_code, &codonkLib.fop_ref[cai_ref])
+        cdef int ret = codonklib.cbi(&self.ncod[0], &self.naa[0], &cbi_val, \
+            &self.dds[0], &self.dda[0], &self.ref_code, &codonklib.fop_ref[cai_ref])
         return cbi_val
 
     cpdef float fop(self, bool factor_in_rare=False, int fop_ref=0):
@@ -220,8 +220,8 @@ cdef class CodonSeq:
         [Ikemura 1981](https://doi.org/10.1016/0022-2836(81)90003-6)
         """
         cdef float fop_val
-        cdef int ret = codonkLib.fop(&self.ncod[0], &fop_val, \
-            &self.dds[0], factor_in_rare, &self.ref_code, &codonkLib.fop_ref[fop_ref])
+        cdef int ret = codonklib.fop(&self.ncod[0], &fop_val, \
+            &self.dds[0], factor_in_rare, &self.ref_code, &codonklib.fop_ref[fop_ref])
         return fop_val
 
     cpdef float enc(self):
@@ -247,7 +247,7 @@ cdef class CodonSeq:
        [Wright 1990](https://doi.org/10.1016/0378-1119(90)90491-9)
         """
         cdef float enc_val
-        cdef int ret = codonkLib.enc(&self.ncod[0], &self.naa[0], &enc_val, \
+        cdef int ret = codonklib.enc(&self.ncod[0], &self.naa[0], &enc_val, \
             &self.dda[0], &self.ref_code)
         return enc_val
 
@@ -261,8 +261,8 @@ cdef class CodonSeq:
         [Kyte & Doolittle 1982](https://doi.org/10.1016/0022-2836(82)90515-0)
         """
         cdef float hydro_val
-        cdef int ret = codonkLib.hydro(&self.naa[0], &hydro_val, \
-            <float (*)>codonkLib.amino_prop.hydro)
+        cdef int ret = codonklib.hydro(&self.naa[0], &hydro_val, \
+            <float (*)>codonklib.amino_prop.hydro)
         return hydro_val
 
     cpdef float aromaticity(self):
@@ -272,14 +272,14 @@ cdef class CodonSeq:
         translated gene product.
         """
         cdef float aromo_val
-        cdef int ret = codonkLib.aromo(&self.naa[0], &aromo_val, \
-            <int (*)>codonkLib.amino_prop.aromo)
+        cdef int ret = codonklib.aromo(&self.naa[0], &aromo_val, \
+            <int (*)>codonklib.amino_prop.aromo)
         return aromo_val
 
 
     cpdef np.ndarray[dtype=double, ndim=1, mode="c"] silent_base_usage_(self):
         cdef np.ndarray[dtype=double, ndim=1, mode="c"] base_sil_vals = np.zeros([4], dtype=c_double)
-        cdef int ret = codonkLib.base_sil_us(&self.ncod[0], &self.naa[0], &base_sil_vals[0],
+        cdef int ret = codonklib.base_sil_us(&self.ncod[0], &self.naa[0], &base_sil_vals[0],
                                         &self.dds[0], &self.dda[0], &self.ref_code)
         return base_sil_vals
 
@@ -317,7 +317,7 @@ cdef class CodonSeq:
         """Calculate Relative Synonymous Codon Usage
         """
         cdef np.ndarray[dtype=float, ndim=1, mode="c"] rscu_vals = np.zeros([65], dtype=c_float)
-        cdef int ret = codonkLib.rscu_usage(&self.ncod[0], &self.naa[0], &rscu_vals[0], &self.dds[0], &self.ref_code)
+        cdef int ret = codonklib.rscu_usage(&self.ncod[0], &self.naa[0], &rscu_vals[0], &self.dds[0], &self.ref_code)
         return rscu_vals
 
     def rscu(self):
@@ -328,7 +328,7 @@ cdef class CodonSeq:
 
     cpdef np.ndarray[dtype=double, ndim=1, mode="c"] _raau(self):
         cdef np.ndarray[dtype=double, ndim=1, mode="c"] raau_vals = np.zeros([22], dtype=c_double)
-        cdef int ret = codonkLib.raau_usage(&self.naa[0], &raau_vals[0])
+        cdef int ret = codonklib.raau_usage(&self.naa[0], &raau_vals[0])
         return raau_vals
 
     def raau(self):
@@ -343,7 +343,7 @@ cdef class CodonSeq:
         cdef np.ndarray[dtype=long, ndim=2, mode="c"] bases = np.zeros([5, 5], dtype=c_long)
         cdef np.ndarray[dtype=double, ndim=1, mode="c"] metrics = np.zeros([18], dtype=c_double)
 
-        cdef int ret = codonkLib.gc(&self.dds[0], &self.ncod[0],
+        cdef int ret = codonklib.gc(&self.dds[0], &self.ncod[0],
             &bases[4, 0], &bases[3, 0], &bases[0, 0], &bases[1, 0], &bases[2, 0],
             &tot_s, &totalaa, &metrics[0], &self.ref_code)
 
@@ -364,7 +364,7 @@ cdef class CodonSeq:
         cdef np.ndarray[dtype=long, ndim=2, mode="c"] bases = np.zeros([5, 5], dtype=c_long)
         cdef np.ndarray[dtype=double, ndim=1, mode="c"] metrics = np.zeros([20], dtype=c_double)
 
-        cdef int ret = codonkLib.gc(&self.dds[0], &self.ncod[0],
+        cdef int ret = codonklib.gc(&self.dds[0], &self.ncod[0],
             &bases[4, 0], &bases[3, 0], &bases[0, 0], &bases[1, 0], &bases[2, 0],
             &tot_s, &totalaa, &metrics[2], &self.ref_code)
 
@@ -401,7 +401,7 @@ cdef class CodonSeq:
         cdef np.ndarray[dtype=long, ndim=1, mode="c"] dinuc_tot = np.zeros([4], dtype=c_long)
         cdef int fram = 0
 
-        cdef int ret = codonkLib.dinuc_count(<char *>self.seq,
+        cdef int ret = codonklib.dinuc_count(<char *>self.seq,
             <long (*)[16]>&dinuc_frames[0, 0], &dinuc_tot[0], &fram)
 
         dinuc_frames[3, :] = np.sum(dinuc_frames, axis=0)

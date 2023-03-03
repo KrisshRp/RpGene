@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-#include "codonW.h"
+#include "../include/codonW.h"
 
 /* define genetic codes   */
 GENETIC_CODE_STRUCT cu_ref[] = {
@@ -314,6 +314,7 @@ MENU_STRUCT Z_menu = {
     NULL, /* Null pointer the logfile name                    */
     NULL, /* error to stderr                                */
 
+    NULL,
     NULL,
     NULL,
     NULL,

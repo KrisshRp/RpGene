@@ -23,7 +23,7 @@ cd ./RpGene
 ```
 ## 3. Install the dependencies
 ```
-sudo pip3 install -r requirements.txt
+sudo python3 install.py
 ```
 ## 4. start the server
 

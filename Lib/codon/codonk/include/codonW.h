@@ -6,11 +6,11 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-#define GARG_EXACT 0x800  
-#define GARG_NEXT 0x1000  
-#define GARG_THERE 0x2000 
-#define GARG_SUBSQ 0x4000 
-#define MAX_ARGS 100      
+#define GARG_EXACT 0x800             /* used in function gargs  */
+#define GARG_NEXT 0x1000             /* used in function gargs  */
+#define GARG_THERE 0x2000            /* used in function gargs  */
+#define GARG_SUBSQ 0x4000            /* used in function gargs  */
+#define MAX_ARGS 100                 /* used in function gargs  */
 #define MAX_FILENAME_LEN 90
 #define MAX_MESSAGE_LEN 300
 

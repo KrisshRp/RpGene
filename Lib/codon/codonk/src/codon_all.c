@@ -6,8 +6,21 @@
 #include <limits.h>
 #include <stdbool.h>
 
-#include "codonW.h"
+#include "../include/codonW.h"
 
+/********************* Initilize Pointers**********************************/
+/* Various pointers to structures are assigned here dependent on the      */
+/* genetic code chosen.                                                   */
+/* paa                points to a struct containing Amino Acid names      */
+/* pap                points to amino acid properties                     */
+/* pcai               points to Adaptation values used to calc CAI        */
+/* pfop               points to a struct describing optimal codons        */
+/* pcbi               points to the same structure as pfop                */
+/* pcu                points to data which has the translation of codons  */
+/* ds                 is a struct describing how synonymous a codon is    */
+/* da                 is a struct describing the size of each AA family   */
+/*                    included/excluded from any COA analysis             */
+/**************************************************************************/
 int initialize_point(char code, char fop_species, char cai_species, MENU_STRUCT *pm, REF_STRUCT *ref)
 {
    pm->paa = ref->amino_acids;
