@@ -7,7 +7,7 @@
 #include <stdbool.h>
 
 #include "../include/codonW.h"
-
+#define _CRT_SECURE_NO_WARNINGS
 /********************* Initilize Pointers**********************************/
 /* Various pointers to structures are assigned here dependent on the      */
 /* genetic code chosen.                                                   */
@@ -93,7 +93,7 @@ int codon_usage_tot(char *seq, long *codon_tot, int *valid_stops, long ncod[], l
 
    for (i = 0; i < seqlen - 2; i += 3)
    {
-      strncpy(codon, (seq + i), 3);
+      strncpy_s(codon, 4, (seq + i), 3);
       icode = ident_codon(codon);
       ncod[icode]++;             /*increment the codon count */
       naa[pcu->ca[icode]]++; /*increment the AA count    */
@@ -178,7 +178,7 @@ int count_codons(long* ncod, long *loc_cod_tot) {
 int clean_up(long *nncod, long *nnaa, int *valid_stops)
 {
    int x;
-   int i;
+   // int i;
 
    for (x = 0; x < 65; x++)
       nncod[x] = 0;

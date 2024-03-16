@@ -321,7 +321,6 @@ MENU_STRUCT Z_menu = {
     NULL,
     NULL,
     NULL,
-    NULL,
     NULL
 };
 

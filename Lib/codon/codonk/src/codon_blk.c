@@ -262,7 +262,7 @@ int gc_out(FILE *foutput, FILE *fblkout, long *nncod, int which, char* title, ME
    double metrics[18];
    int i;
 
-   gc(pm->ds, nncod, bases, base_tot, base_1, base_2, base_3, &tot_s, &totalaa, &metrics, pm->pcu);
+   gc(pm->ds, nncod, bases, base_tot, base_1, base_2, base_3, &tot_s, &totalaa, metrics, pm->pcu);
 
    static char header = false;
    char sp = pm->separator;
